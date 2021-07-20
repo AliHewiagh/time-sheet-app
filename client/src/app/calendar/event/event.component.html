@@ -1,0 +1,134 @@
+<div [hidden]="updateMode">
+  <div *ngIf="postCount > 0" class="card">
+    <div class="card-header">
+      <div class="row">
+        <div class="col-md-6">{{ postCount }} Post(s)</div>
+        <div class="col-md-6 text-end">Total Hours {{ currentEvent.hour }}</div>
+      </div>
+    </div>
+    <div class="card-body" style="max-height: 200px; overflow-y: scroll">
+      <ul class="list-group">
+        <ng-container *ngFor="let post of currentEvent.posts; let i = index">
+          <li
+            class="
+              list-group-item
+              d-flex
+              justify-content-between
+              align-items-center
+            "
+          >
+            {{ post.title }}
+
+            <span class="badge badge-dark badge-pill text-dark">
+              <span style="margin-right: 8px" class="badge bg-primary"
+                >{{ post.hours }} hours and {{ post.minutes }} minutes</span
+              >
+
+              <i
+                (click)="changeToUpdateMode(post, i)"
+                class="bi bi-pencil-square text-success"
+                style="font-size: 1.2rem; cursor: pointer; margin-right: 8px"
+              ></i>
+              <i
+                (click)="removePost(i)"
+                class="bi bi-trash text-danger"
+                style="font-size: 1.2rem; cursor: pointer"
+              ></i>
+            </span>
+          </li>
+        </ng-container>
+      </ul>
+    </div>
+  </div>
+  <p *ngIf="postCount < 1" class="font-weight-light">There is no posts!</p>
+</div>
+
+<div [hidden]="!updateMode">
+  <div class="row">
+    <div class="col-md-10">
+      <form [formGroup]="postForm">
+        <div class="row">
+          <div class="col-md-6">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-sm"
+                >Hours</span
+              >
+              <input
+                type="number"
+                formControlName="hours"
+                class="form-control"
+                aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-sm"
+              />
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="input-group input-group-sm mb-3">
+              <span class="input-group-text" id="inputGroup-sizing-sm"
+                >Minutes</span
+              >
+              <input
+                type="number"
+                formControlName="minutes"
+                class="form-control"
+                aria-label="Sizing example input"
+                aria-describedby="inputGroup-sizing-sm"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div class="form-floating">
+          <textarea
+            formControlName="title"
+            class="form-control"
+            placeholder="Title"
+            id="floatingTextarea2"
+            style="height: 100px"
+          ></textarea>
+          <label for="floatingTextarea2">Post Description</label>
+        </div>
+        <br />
+        <button
+          [disabled]="postForm.invalid"
+          type="button"
+          (click)="updatePost()"
+          class="btn btn-outline-primary btn-sm float-end"
+        >
+          Update
+        </button>
+
+        <div
+          *ngIf="title.invalid && (title.dirty || title.touched)"
+          class="alert alert-danger"
+        >
+          <div *ngIf="title.errors?.required">Description is required.</div>
+        </div>
+        <div
+          *ngIf="hours.invalid && (hours.dirty || hours.touched)"
+          class="alert alert-danger"
+        >
+          <div *ngIf="hours.errors?.required">Hours is required.</div>
+          <div *ngIf="hours.errors?.min">Minimum hour must be 1.</div>
+          <div *ngIf="hours.errors?.max">Maximum hour must be 24.</div>
+        </div>
+        <div
+          *ngIf="minutes.invalid && (minutes.dirty || minutes.touched)"
+          class="alert alert-danger"
+        >
+          <div *ngIf="minutes.errors?.required">Minutes is required.</div>
+          <div *ngIf="minutes.errors?.min">Minimum minutes must be 0.</div>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-2 text-end">
+      <button
+        type="button"
+        (click)="listMode()"
+        class="btn btn-outline-secondary btn-sm"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  </div>
+</div>
