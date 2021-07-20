@@ -1,0 +1,31 @@
+<button
+  type="button"
+  (click)="updateHalfDay()"
+  class="btn btn-warning btn-sm"
+  style="margin-right: 8px"
+  [disabled]="isLoading || currentEvent.req_hours === 4"
+>
+  <ng-container *ngIf="isLoading">
+    <span
+      class="spinner-border spinner-border-sm"
+      role="status"
+      aria-hidden="true"
+      style="margin-right: 4px"
+    ></span>
+    <span class="sr-only">Loading...</span>
+  </ng-container>
+  <ng-container *ngIf="!isLoading && currentEvent.req_hours > 4"
+    >half-day</ng-container
+  >
+  <ng-container *ngIf="!isLoading && currentEvent.req_hours === 4"
+    >marked half-day</ng-container
+  >
+</button>
+
+<button
+  type="button"
+  (click)="closeModel()"
+  class="btn btn-outline-secondary btn-sm"
+>
+  <span aria-hidden="true">&times;</span>
+</button>
