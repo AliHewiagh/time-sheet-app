@@ -9,6 +9,10 @@ const connectDB = async () => {
      */
     while (attempts) {
         try {
+            mongoose.set('useNewUrlParser', true);
+            mongoose.set('useFindAndModify', false);
+            mongoose.set('useCreateIndex', true);
+            mongoose.set('useUnifiedTopology', true);
             await mongoose.connect(db);
             console.log('Time Sheet DB connected...');
             break;
