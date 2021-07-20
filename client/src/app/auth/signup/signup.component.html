@@ -1,0 +1,60 @@
+<main class="form-signin">
+  <form [formGroup]="signupForm">
+    <h1 class="h3 mb-3 fw-normal">Register</h1>
+
+    <div class="form-floating">
+      <input
+        formControlName="email"
+        type="email"
+        class="form-control"
+        id="floatingInput"
+        placeholder="name@example.com"
+      />
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input
+        formControlName="password"
+        type="password"
+        class="form-control"
+        id="floatingPassword"
+        placeholder="Password"
+      />
+      <label for="floatingPassword">Password</label>
+    </div>
+    <button
+      [disabled]="signupForm.invalid"
+      class="w-100 btn btn-lg btn-dark"
+      type="submit"
+      (click)="onSignup()"
+    >
+      <span
+        *ngIf="isLoading"
+        class="spinner-border spinner-border-sm"
+        role="status"
+        aria-hidden="true"
+        style="margin-right: 4px"
+      ></span>
+      <span class="sr-only">Sign up</span>
+    </button>
+  </form>
+  <br />
+  <br />
+
+  <div
+    *ngIf="email.invalid && (email.dirty || email.touched)"
+    class="alert alert-danger"
+  >
+    <div *ngIf="email.errors?.required">Email is required.</div>
+  </div>
+  <div
+    *ngIf="password.invalid && (password.dirty || password.touched)"
+    class="alert alert-danger"
+  >
+    <div *ngIf="password.errors?.required">Password is required.</div>
+    <div *ngIf="password.errors?.minlength">
+      Password must be at least 6 characters long.
+    </div>
+  </div>
+  <span *ngIf="error" class="text-danger">{{ error }}</span>
+</main>
