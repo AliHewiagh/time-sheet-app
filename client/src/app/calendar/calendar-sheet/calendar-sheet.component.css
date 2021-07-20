@@ -1,0 +1,21 @@
+.cal-month-view .bg-yellow,
+.cal-week-view .cal-day-columns .bg-yellow,
+.cal-day-view .bg-yellow {
+  background-color: #ffc107 !important;
+}
+
+.cal-month-view .bg-green,
+.cal-week-view .cal-day-columns .bg-green,
+.cal-day-view .bg-green {
+  background-color: #28a745 !important;
+}
+
+.cal-day-badge.ng-star-inserted {
+  display: none !important;
+}
+
+.vl {
+  border-right: 2px solid black;
+  height: 250px;
+  width: 20px !important;
+}

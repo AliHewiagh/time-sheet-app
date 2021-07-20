@@ -1,0 +1,75 @@
+<app-calendar-header
+  [(view)]="view"
+  [(viewDate)]="viewDate"
+  (viewDateChange)="fetchEvents()"
+  (viewChange)="fetchEvents()"
+>
+</app-calendar-header>
+
+<hr />
+
+<ng-template #loading>
+  <div class="text-center">
+    <div class="spinner-border" role="status">
+      <span class="sr-only"></span>
+    </div>
+  </div>
+</ng-template>
+
+<div *ngIf="events$ | async; else loading; let events">
+  <div [ngSwitch]="view">
+    <mwl-calendar-month-view
+      *ngSwitchCase="'month'"
+      [viewDate]="viewDate"
+      [events]="events"
+      [refresh]="refresh"
+      (dayClicked)="dayClicked($event.day)"
+      (beforeViewRender)="beforeMonthViewRender($event)"
+    >
+    </mwl-calendar-month-view>
+  </div>
+</div>
+
+<ng-template #dayModel let-close="close">
+  <div class="modal-header">
+    <h5 class="modal-title">
+      Event - {{ selectedDayTasks.date | date: "fullDate" }}
+    </h5>
+
+    <app-configuration
+      (modelCloser)="close()"
+      (refresh)="fetchEvents()"
+      [event]="selectedDayTasks"
+    ></app-configuration>
+  </div>
+  <div class="modal-body">
+    <div class="row">
+      <div class="col-md-6">
+        <app-event
+          (modelCloser)="close()"
+          (refresh)="fetchEvents()"
+          [event]="selectedDayTasks"
+        ></app-event>
+      </div>
+      <div class="col-md-1">
+        <div class="vl"></div>
+      </div>
+      <div class="col-md-5">
+        <app-post-form
+          (refresh)="fetchEvents()"
+          (eventId)="setCurrentChosenEvent($event)"
+          [event]="selectedDayTasks"
+        ></app-post-form>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button
+      type="button"
+      class="btn btn-outline-secondary btn-sm"
+      (click)="close()"
+    >
+      Close
+    </button>
+  </div>
+</ng-template>
