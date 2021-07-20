@@ -1,0 +1,52 @@
+<main class="form-signin">
+  <form [formGroup]="form">
+    <h1 class="h3 mb-3 fw-normal">Login</h1>
+    <div class="form-floating">
+      <input
+        type="email"
+        formControlName="email"
+        class="form-control"
+        id="floatingInput"
+        placeholder="name@example.com"
+      />
+      <label for="floatingInput">Email address</label>
+    </div>
+    <div class="form-floating">
+      <input
+        type="password"
+        formControlName="password"
+        class="form-control"
+        id="floatingPassword"
+        placeholder="Password"
+      />
+      <label for="floatingPassword">Password</label>
+    </div>
+
+    <button
+      [disabled]="form.invalid"
+      (click)="onLogin()"
+      class="w-100 btn btn-lg btn-dark"
+    >
+      Sign in
+    </button>
+    <br />
+    <br />
+
+    <div
+      *ngIf="email.invalid && (email.dirty || email.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="email.errors?.required">Email is required.</div>
+    </div>
+    <div
+      *ngIf="password.invalid && (password.dirty || password.touched)"
+      class="alert alert-danger"
+    >
+      <div *ngIf="password.errors?.required">Password is required.</div>
+      <div *ngIf="password.errors?.minlength">
+        Password must be at least 6 characters long.
+      </div>
+    </div>
+    <span *ngIf="error" class="text-danger">{{ error }}</span>
+  </form>
+</main>
