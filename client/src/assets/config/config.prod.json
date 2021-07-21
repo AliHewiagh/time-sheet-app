@@ -1,3 +1,3 @@
 {
-  "HOST_API": "http://backend/v1"
+  "HOST_API": "http://timesheetapp-env.eba-8seixdmi.ap-southeast-1.elasticbeanstalk.com/backend/v1"
 }
