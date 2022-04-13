@@ -4,9 +4,13 @@
     "description": "",
     "main": "index.js",
     "scripts": {
+        "build": "tsc -p tsconfig.build.json && npm run copy",
         "start": "node src/index.js",
         "dev": "nodemon src/index.js",
-        "test": "export NODE_ENV=test && mocha 'src/test/**/*.js'"
+        "test": "export NODE_ENV=test && mocha 'src/test/**/*.js'",
+        "dist:start": "node --max_old_space_size=4096 dist/picl.api/index.js",
+        "tsc": "tsc",
+        "copy": "copyfiles \"./src/views/*/*\" ./dist/picl.api/"
     },
     "keywords": [],
     "author": "",
